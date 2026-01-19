@@ -34,7 +34,6 @@ export async function run() {
       activeCell.values = [["TEST"]];
 
       await context.sync();
-      console.log("[ddguo][taskpane.ts]: Active cell updated with Custom XML Part ID.");
     });
   } catch (error) {
     console.error(error);
@@ -56,11 +55,11 @@ export async function runweb() {
 
       // Set the standardWidth property of the first worksheet to clear the Undo stack.
       currentWorkbook.worksheets.getActiveWorksheet().standardWidth = 8.43;
+
       // Insert dummy data to current cell
       activeCell.values = [["TEST"]];
 
       await context.sync();
-      console.log("[ddguo][taskpane.ts]: Active cell updated with Custom XML Part ID.");
     });
   } catch (error) {
     console.error(error);
