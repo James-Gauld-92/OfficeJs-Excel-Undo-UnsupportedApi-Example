@@ -11,10 +11,42 @@ Office.onReady((info) => {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
+    document.getElementById("runweb").onclick = runweb;
   }
 });
 
 export async function run() {
+  console.log("[ddguo][taskpane.ts]: run is executed.");
+
+  try {
+    await Excel.run({ mergeUndoGroup: true }, async (context) => {
+      context.workbook.worksheets.load("items,items/name");
+      await context.sync();
+
+      const currentWorkbook = context.workbook;
+      const activeCell = currentWorkbook.getActiveCell();
+      const worksheetCount = currentWorkbook.worksheets.items.length;
+
+      // Set the standardWidth property of the first worksheet to clear the Undo stack.
+      currentWorkbook.worksheets.getActiveWorksheet().position = worksheetCount - 1;
+
+      // Insert dummy data to current cell
+      activeCell.values = [["TEST"]];
+
+      await context.sync();
+      console.log("[ddguo][taskpane.ts]: Active cell updated with Custom XML Part ID.");
+    });
+  } catch (error) {
+    console.error(error);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
+    console.error("Error code:", error.code);
+    console.error("Error traceMessages:", error.traceMessages);
+    console.error("Error debugInfo:", error.debugInfo);
+  }
+}
+
+export async function runweb() {
   console.log("[ddguo][taskpane.ts]: run is executed.");
 
   try {
@@ -24,7 +56,6 @@ export async function run() {
 
       // Set the standardWidth property of the first worksheet to clear the Undo stack.
       currentWorkbook.worksheets.getActiveWorksheet().standardWidth = 8.43;
-
       // Insert dummy data to current cell
       activeCell.values = [["TEST"]];
 
