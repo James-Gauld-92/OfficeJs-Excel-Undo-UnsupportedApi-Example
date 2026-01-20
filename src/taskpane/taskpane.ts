@@ -27,8 +27,17 @@ export async function run() {
       const activeCell = currentWorkbook.getActiveCell();
       const worksheetCount = currentWorkbook.worksheets.items.length;
 
-      // Set the standardWidth property of the first worksheet to clear the Undo stack.
-      currentWorkbook.worksheets.getActiveWorksheet().position = worksheetCount - 1;
+      // console.log("[ddguo][taskpane.ts]: setting standard width to clear undo stack.");
+      // currentWorkbook.worksheets.getActiveWorksheet().position = worksheetCount - 1;
+
+      // console.log("[ddguo][taskpane.ts]: setting standard width to clear undo stack.");
+      // currentWorkbook.worksheets.getActiveWorksheet().standardWidth = 8.43;
+
+      // console.log("[ddguo][taskpane.ts]: setting document tags to clear undo stack.");
+      // currentWorkbook.properties.keywords = "ddguo-test-tag";
+
+      console.log("[ddguo][taskpane.ts]: unprotecting workbook to clear undo stack.");
+      currentWorkbook.protection.unprotect();
 
       // Insert dummy data to current cell
       activeCell.values = [["TEST"]];
